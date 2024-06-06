@@ -1,8 +1,8 @@
 package org.studyeasy.SpringBlog.util.constants;
 
 public enum Previllage {
-    RESET_ANY_USER_PASSWORD(1l,"RESET_ANY_USER_PASSWORD"),
-    ACCESS_ADMIN_PANEL(2l,"ACCESS_ADMIN_PANEL");
+    RESET_ANY_USER_PASSWORD(1L,"RESET_ANY_USER_PASSWORD"),
+    ACCESS_ADMIN_PANEL(2L,"ACCESS_ADMIN_PANEL");
 
     private Long id;
 

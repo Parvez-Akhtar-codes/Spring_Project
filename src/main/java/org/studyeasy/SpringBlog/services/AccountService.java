@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.studyeasy.SpringBlog.models.Account;
+import org.studyeasy.SpringBlog.models.Authority;
 import org.studyeasy.SpringBlog.repositories.AccountRepository;
 import org.studyeasy.SpringBlog.util.constants.Roles;
 
@@ -35,12 +36,16 @@ public class AccountService implements UserDetailsService{
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Account> optionalAccount = accountRepository.findOneByEmailIgnoreCase(email);
         if(!optionalAccount.isPresent()){
-            throw new UsernameNotFoundException("Account not found");
+            throw new UsernameNotFoundException("Account not found");   
         }
         Account account = optionalAccount.get();
         
         List<GrantedAuthority> grantedAuthority = new ArrayList<>();
         grantedAuthority.add(new SimpleGrantedAuthority(account.getRole()));
+
+        for(Authority _auth : account.getAuthorities()){
+            grantedAuthority.add(new SimpleGrantedAuthority(_auth.getName()));
+        }
 
         return new User(account.getEmail(), account.getPassword(), grantedAuthority);
     }

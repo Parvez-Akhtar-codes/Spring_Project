@@ -1,6 +1,8 @@
 package org.studyeasy.SpringBlog.config;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +14,7 @@ import org.studyeasy.SpringBlog.services.AccountService;
 import org.studyeasy.SpringBlog.services.AuthorityService;
 import org.studyeasy.SpringBlog.services.PostService;
 import org.studyeasy.SpringBlog.util.constants.Previllage;
+import org.studyeasy.SpringBlog.util.constants.Roles;
 
 @Component
 public class SeedData implements CommandLineRunner{
@@ -40,21 +43,42 @@ public class SeedData implements CommandLineRunner{
 
        Account account01 = new Account();
        Account account02 = new Account();
+       Account account03 = new Account();
+       Account account04 = new Account();
 
-       account01.setEmail("account01@studyeasy.org");
+       account01.setEmail("user@user.org");
        account01.setPassword("password");
-       account01.setFirstname("user01");
-       account01.setLastname("lastname");
+       account01.setFirstname("user");
+       account01.setLastname("user1");
 
 
-       account02.setEmail("account02@studyeasy.org");
+       account02.setEmail("admin@admin.org");
        account02.setPassword("password");
-       account02.setFirstname("user02");
-       account02.setLastname("lastname");
+       account02.setFirstname("admin");
+       account02.setLastname("admin1");
+       account02.setRole(Roles.ADMIN.getRole());
+
+       account03.setEmail("editor@editor.org");
+       account03.setPassword("password");
+       account03.setFirstname("editor");
+       account03.setLastname("editor1");
+       account03.setRole(Roles.EDITOR.getRole());
+
+       account04.setEmail("super_editor@editor.org");
+       account04.setPassword("password");
+       account04.setFirstname("super_editor");
+       account04.setLastname("editor2");
+       account04.setRole(Roles.EDITOR.getRole());
+       Set<Authority> Authorities = new HashSet<>();
+       authorityService.findById(Previllage.RESET_ANY_USER_PASSWORD.getId()).ifPresent(Authorities::add);
+       authorityService.findById(Previllage.ACCESS_ADMIN_PANEL.getId()).ifPresent(Authorities::add);
+       account04.setAuthorities(Authorities);
 
 
        accountService.save(account01);
        accountService.save(account02);
+       accountService.save(account03);
+       accountService.save(account04);
        
 
 
