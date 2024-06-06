@@ -6,22 +6,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.studyeasy.SpringBlog.models.Account;
+import org.studyeasy.SpringBlog.models.Authority;
 import org.studyeasy.SpringBlog.models.Post;
 import org.studyeasy.SpringBlog.services.AccountService;
+import org.studyeasy.SpringBlog.services.AuthorityService;
 import org.studyeasy.SpringBlog.services.PostService;
+import org.studyeasy.SpringBlog.util.constants.Previllage;
 
 @Component
 public class SeedData implements CommandLineRunner{
 
+   
     @Autowired
-    private PostService postService;
+    private  PostService postService;
 
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private AuthorityService authorityService;
+
+   
+
     @Override
     public void run(String... args) throws Exception {
-        
+
+       for(Previllage auth : Previllage.values()){
+        Authority authority = new Authority();
+        authority.setId(auth.getId());
+        authority.setName(auth.getprevillage());
+        authorityService.save(authority);
+       }
+
        Account account01 = new Account();
        Account account02 = new Account();
 
