@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.studyeasy.SpringBlog.util.constants.Previllage;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -19,7 +20,7 @@ public class WebSecurityConfig {
         "/css/**",
         "/fonts/**",
         "/images/**",
-        "/js/**",
+        "/js/**"
 
     };
 
@@ -32,22 +33,17 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
         .authorizeRequests()
-        .antMatchers(WHITELIST)
-        .permitAll()
+        .antMatchers(WHITELIST).permitAll()
         .anyRequest()
         .authenticated()
         .and()
         .formLogin()
-        .loginPage("/login")
-        .loginProcessingUrl("/login")
-        .usernameParameter("email")
-        .passwordParameter("password")
-        .defaultSuccessUrl("/", true)
-        .failureUrl("/login?error")
+        .loginPage("/login").loginProcessingUrl("/login")
+        .usernameParameter("email").passwordParameter("password")
+        .defaultSuccessUrl("/", true).failureUrl("/login?error")
         .permitAll()
         .and()
-        .logout()
-        .logoutUrl("/logout")
+        .logout().logoutUrl("/logout")
         .logoutSuccessUrl("/")
         .and()
         .httpBasic();
@@ -60,3 +56,4 @@ public class WebSecurityConfig {
     }
     
 }
+

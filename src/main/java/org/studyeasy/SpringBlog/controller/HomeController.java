@@ -21,5 +21,9 @@ public class HomeController {
         return "home";
     }
   
-    
+    @GetMapping("/editor")
+    public String editor(Model model){
+        
+        return "editor";
+    }
 }
