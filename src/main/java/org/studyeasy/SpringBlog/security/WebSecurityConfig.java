@@ -34,8 +34,10 @@ public class WebSecurityConfig {
         http
         .authorizeRequests()
         .antMatchers(WHITELIST).permitAll()
-        .anyRequest()
-        .authenticated()
+        .antMatchers("/profile/**").authenticated()
+        .antMatchers("/admin/**").hasRole("ADMIN")
+        .antMatchers("/editor/**").hasAnyRole("ADMIN","EDITOR")
+        .antMatchers("/test").hasAuthority(Previllage.ACCESS_ADMIN_PANEL.getprevillage())
         .and()
         .formLogin()
         .loginPage("/login").loginProcessingUrl("/login")
